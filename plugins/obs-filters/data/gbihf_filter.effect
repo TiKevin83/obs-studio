@@ -16,11 +16,6 @@ struct VertData
     float2 uv : TEXCOORD0;
 };
 
-float4 pixel(float2 uv)
-{
-    return image.Sample(textureSampler, uv);
-}
-
 VertData VSDefault(VertData v_in)
 {
     VertData vert_out;
