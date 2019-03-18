@@ -5,9 +5,9 @@ uniform bool switchLeftToRight;
 uniform float2 pixel_size;
 
 sampler_state textureSampler {
-	Filter    =Linear;
+	Filter   = Linear;
 	AddressU = Clamp;
-	AddressV  =Clamp;
+	AddressV = Clamp;
 };
 
 struct VertData
@@ -29,13 +29,13 @@ float4 mainImage(VertData v_in) : TARGET
     float2 pos = v_in.uv / pixel_size.xy;
     float2 coord = floor(fmod(pos, 2.0));
 
-    if (coord.x <= 0.003)
+    if (coord.x == 0)
     {
         return image.Sample(textureSampler, v_in.uv);
     }
     else
     {
-            return image.Sample(textureSampler, float2(v_in.uv.x - pixel_size.xy.x, v_in.uv.y));
+		return image.Sample(textureSampler, float2(v_in.uv.x - pixel_size.xy.x, v_in.uv.y));
     }
 }
 
