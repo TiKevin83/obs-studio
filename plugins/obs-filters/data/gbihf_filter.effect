@@ -3,6 +3,7 @@ uniform texture2d image;
 
 uniform bool switchLeftToRight;
 uniform float2 pixel_size;
+uniform float2 total_size;
 
 sampler_state textureSampler {
 	Filter   = Linear;
@@ -26,17 +27,7 @@ VertData VSDefault(VertData v_in)
 
 float4 mainImage(VertData v_in) : TARGET
 {
-    float2 pos = v_in.uv / pixel_size.xy;
-    float2 coord = floor(fmod(pos, 2.0));
-
-    if (coord.x == 0)
-    {
-        return image.Sample(textureSampler, v_in.uv);
-    }
-    else
-    {
-		return image.Sample(textureSampler, float2(v_in.uv.x - pixel_size.xy.x, v_in.uv.y));
-    }
+	return image.Sample(textureSampler, float2(v_in.uv.x - floor(fmod(v_in.uv.x * total_size.x, 2.0)) * pixel_size.x, v_in.uv.y));
 }
 
 technique Draw
